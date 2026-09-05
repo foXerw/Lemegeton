@@ -30,6 +30,12 @@ body {
   margin: 0;
   background:
     radial-gradient(ellipse at 50% -8%, rgba(184, 145, 47, .06), transparent 55%),
+    radial-gradient(ellipse at 12% 30%, rgba(60, 38, 18, .28), transparent 30%),
+    radial-gradient(ellipse at 85% 12%, rgba(46, 30, 16, .24), transparent 26%),
+    radial-gradient(ellipse at 70% 70%, rgba(58, 34, 18, .20), transparent 30%),
+    radial-gradient(ellipse at 30% 85%, rgba(70, 40, 20, .18), transparent 28%),
+    radial-gradient(ellipse at 8% 92%, rgba(110, 29, 29, .08), transparent 18%),
+    radial-gradient(ellipse at 92% 55%, rgba(94, 130, 112, .05), transparent 20%),
     var(--bg);
   color: var(--bone);
   font-family: var(--serif);
@@ -39,16 +45,18 @@ body {
   overflow-x: hidden;
 }
 
-/* 羊皮纸噪点 + 划痕 + 霉斑 */
+/* 羊皮纸噪点 + 细密划痕 + 霉斑 + 不均匀氧化 */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: .10;
+  opacity: .12;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.12' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size: 180px 180px, 560px 560px;
 }
 
 /* 烛光暗角 + 焦痕 + 暖色辉光 */
@@ -63,6 +71,24 @@ body::after {
     radial-gradient(ellipse at 18% 12%, rgba(120, 78, 26, .10), transparent 42%),
     radial-gradient(ellipse at 84% 86%, rgba(110, 29, 29, .10), transparent 40%),
     radial-gradient(ellipse at 70% 18%, rgba(30, 22, 12, .18), transparent 34%);
+}
+
+/* 烛火摇曳（尊重减少动态偏好） */
+@media (prefers-reduced-motion: no-preference) {
+  body::after { animation: candle 7s ease-in-out infinite; }
+  .hero-candle svg { animation: flame 2.8s ease-in-out infinite; }
+}
+@keyframes candle {
+  0%, 100% { opacity: 1; }
+  38% { opacity: .88; }
+  52% { opacity: .96; }
+  71% { opacity: .84; }
+  86% { opacity: .93; }
+}
+@keyframes flame {
+  0%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(1.08) translateY(-1px); }
+  70% { transform: scaleY(.94); }
 }
 
 ::selection { background: rgba(184, 145, 47, .32); color: var(--bone); }
@@ -216,9 +242,35 @@ a:hover { color: var(--bone); }
 
 /* ── 内容页骨架（古籍框线） ─────────────────── */
 .page {
-  max-width: 820px;
+  position: relative;
+  max-width: 860px;
   margin: 0 auto;
-  padding: clamp(3rem, 7vw, 5rem) clamp(1.3rem, 5vw, 3rem) 4.5rem;
+  padding: clamp(3rem, 7vw, 5rem) clamp(1.6rem, 6vw, 3.6rem) 4.5rem;
+  /* 磨损页边（左右渐暗，如氧化与手泽） */
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .42), transparent 4%, transparent 96%, rgba(0, 0, 0, .42)),
+    linear-gradient(var(--parchment), var(--parchment));
+}
+/* 对称双细线框 */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  /* 四角皮革包角 */
+  background:
+    linear-gradient(135deg, rgba(8, 5, 3, .85) 0 14px, transparent 15px) top left / 30px 30px no-repeat,
+    linear-gradient(-135deg, rgba(8, 5, 3, .85) 0 14px, transparent 15px) top right / 30px 30px no-repeat,
+    linear-gradient(45deg, rgba(8, 5, 3, .85) 0 14px, transparent 15px) bottom left / 30px 30px no-repeat,
+    linear-gradient(-45deg, rgba(8, 5, 3, .85) 0 14px, transparent 15px) bottom right / 30px 30px no-repeat;
+}
+.page::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid var(--line-faint);
+  pointer-events: none;
 }
 .page-head {
   text-align: center;
@@ -615,6 +667,105 @@ a:hover { color: var(--bone); }
 /* ── 滚动淡入 ─────────────────────────────── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
 .reveal.visible { opacity: 1; transform: none; }
+
+/* ── 黑体字拉丁箴言（每页页首） ─────────────── */
+.page-latin {
+  font-family: var(--blackletter);
+  font-size: 1.2rem;
+  letter-spacing: .1em;
+  color: var(--gold);
+  margin: 0 0 .8rem;
+  opacity: .92;
+}
+
+/* ── 行星/炼金符号行 ───────────────────────── */
+.planet-row {
+  font-size: 1.05rem;
+  letter-spacing: 1.1em;
+  padding-left: 1.1em; /* 抵消字距，使视觉居中 */
+  color: var(--gold);
+  opacity: .8;
+  margin: 0 0 1.6rem;
+}
+
+/* ── 希伯来页边注（宽屏） ───────────────────── */
+.marginalia {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: .95rem;
+  letter-spacing: .55em;
+  color: var(--gold);
+  opacity: .10;
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+  user-select: none;
+}
+.marginalia.left { left: 1.1rem; }
+.marginalia.right { right: 1.1rem; }
+@media (min-width: 1240px) { .marginalia { display: block; } }
+
+/* ── 褪色红蜡封印 ──────────────────────────── */
+.wax-seal {
+  position: absolute;
+  width: 104px;
+  color: #7a2020;
+  opacity: .82;
+  transform: rotate(-14deg);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .55)) saturate(.8);
+  pointer-events: none;
+}
+.wax-seal--hero { right: 8%; bottom: 16%; }
+.wax-seal--head { right: 4%; top: -6px; width: 88px; opacity: .7; }
+
+/* ── Hero 装饰：星座图 / 蜡烛 / 衔尾蛇 ─────── */
+.hero-constellation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--gold);
+  opacity: .10;
+  pointer-events: none;
+}
+.hero-candle {
+  position: absolute;
+  bottom: 14%;
+  width: 30px;
+  color: var(--gold-bright);
+  opacity: .68;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(217, 189, 120, .35));
+}
+.hero-candle.left { left: 10%; }
+.hero-candle.right { right: 10%; }
+@media (max-width: 700px) { .hero-candle, .wax-seal--hero { display: none; } }
+
+/* ── 卷轴区块饰符分隔 ──────────────────────── */
+.scroll-inner::before {
+  content: "— ✠ —";
+  display: block;
+  font-size: .78rem;
+  letter-spacing: .55em;
+  color: var(--gold);
+  opacity: .75;
+  margin-bottom: 1.6rem;
+}
+
+/* ── 页脚饰纹（蛇 / 钥匙 / 头骨） ──────────── */
+.foot-ornaments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2rem;
+  margin: .4rem 0 1rem;
+  color: var(--gold);
+  opacity: .7;
+}
+.foot-ornaments svg { height: 22px; width: auto; }
+.foot-ornaments .orn-snake { height: 16px; }
 
 /* ── 响应式 ───────────────────────────────── */
 @media (max-width: 640px) {

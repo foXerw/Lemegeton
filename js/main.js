@@ -43,10 +43,30 @@
   }
 
   /* ── 共享页脚 ─────────────────────────────── */
+  const ORN_SNAKE = `<svg class="orn-snake" viewBox="0 0 300 30" aria-hidden="true"><path d="M8 15c28-13 56 13 84 0s56-13 84 0 56 13 84 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M288 15l12-6-3 10z" fill="currentColor"/></svg>`;
+  const ORN_SKULL = `<svg viewBox="0 0 60 70" aria-hidden="true"><path d="M30 4C15 4 6 15 6 28c0 8 4 14 9 18v10h9v8h4v-8h4v8h4v-8h9V46c5-4 9-10 9-18C54 15 45 4 30 4z" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="21" cy="28" r="5" fill="currentColor"/><circle cx="39" cy="28" r="5" fill="currentColor"/><path d="M30 34l-4 8h8z" fill="currentColor"/></svg>`;
+  const ORN_KEY = `<svg viewBox="0 0 100 40" aria-hidden="true"><circle cx="18" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="18" cy="20" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="29" y1="20" x2="88" y2="20" stroke="currentColor" stroke-width="3"/><path d="M72 20v10M84 20v14" stroke="currentColor" stroke-width="3"/></svg>`;
+
   function renderFooter() {
     const el = document.getElementById("site-footer");
     if (!el) return;
-    el.innerHTML = `<footer class="site-footer"><p class="foot-brand">LEMEGETON · 所罗门大小钥匙 · 档案</p><p>内容仅供历史与文化学习 · 封印图源 esotericarchives.com（公共领域）</p></footer>`;
+    el.innerHTML = `<footer class="site-footer"><div class="foot-ornaments">${ORN_SKULL}${ORN_SNAKE}${ORN_KEY}</div><p class="foot-brand">LEMEGETON · 所罗门大小钥匙 · 档案</p><p>内容仅供历史与文化学习 · 封印图源 esotericarchives.com（公共领域）</p></footer>`;
+  }
+
+  /* ── 希伯来页边注（宽屏装饰） ─────────────── */
+  function renderMarginalia() {
+    if (document.querySelector(".marginalia")) return;
+    const text = "יהוה אלהים אגלא טטרגרמטון שהמפורש ";
+    const left = document.createElement("div");
+    left.className = "marginalia left";
+    left.setAttribute("aria-hidden", "true");
+    left.textContent = text.repeat(3);
+    const right = document.createElement("div");
+    right.className = "marginalia right";
+    right.setAttribute("aria-hidden", "true");
+    right.textContent = text.repeat(3);
+    document.body.appendChild(left);
+    document.body.appendChild(right);
   }
 
   /* ── 图鉴页 ───────────────────────────────── */
@@ -238,6 +258,7 @@
   /* ── 初始化 ───────────────────────────────── */
   renderNav();
   renderFooter();
+  renderMarginalia();
   initGoetia();
   initAngels();
   initScrollReveal();
