@@ -419,11 +419,14 @@ a:hover { color: var(--accent-strong); }
 }
 .ritual-img {
   max-width: 100%;
-  max-height: 260px;
+  max-height: 420px;
   width: auto;
   object-fit: contain;
   filter: invert(1);
 }
+.ritual-card--wide { grid-column: 1 / -1; }
+.ritual-card--wide .ritual-figure { min-height: 0; }
+.ritual-card--wide .ritual-img { max-height: 620px; }
 .ritual-name {
   font-family: var(--serif);
   font-weight: 600;
