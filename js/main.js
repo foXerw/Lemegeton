@@ -185,6 +185,29 @@
     if (e.key === "Escape" && !modalEl.hidden) closeModal();
   });
 
+  /* ── 滚动淡入 ─────────────────────────────── */
+  const revealEls = document.querySelectorAll(".reveal");
+  const revealIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add("visible"); revealIO.unobserve(en.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach((el) => revealIO.observe(el));
+
+  /* ── 导航高亮当前区块 ─────────────────────── */
+  const navLinks = document.querySelectorAll(".nav-links a");
+  const navSections = [...navLinks]
+    .map((a) => document.getElementById(a.getAttribute("href").slice(1)))
+    .filter(Boolean);
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) {
+        navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+      }
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  navSections.forEach((s) => navIO.observe(s));
+
   /* ── 初始化与对外接口 ─────────────────────── */
   renderBooks();
   buildFilters();
