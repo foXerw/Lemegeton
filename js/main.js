@@ -187,11 +187,24 @@
     `;
   }
 
+  /* ── 卷轴首页滚动淡入 ─────────────────────── */
+  function initScrollReveal() {
+    const els = document.querySelectorAll(".reveal");
+    if (!els.length || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1 });
+    els.forEach((el) => io.observe(el));
+  }
+
   /* ── 初始化 ───────────────────────────────── */
   renderNav();
   renderFooter();
   initGoetia();
   initAngels();
+  initScrollReveal();
 
   window.LEMEGETON = { sigilFile };
 })();
