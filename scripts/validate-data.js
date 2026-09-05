@@ -28,4 +28,17 @@ for (const b of data.BOOKS) {
   }
 }
 
-console.log("OK: 72 demons + 5 books validated");
+assert.ok(Array.isArray(data.ANGELS), "ANGELS must be an array");
+assert.strictEqual(data.ANGELS.length, 72, "must contain exactly 72 angels");
+const seenAngels = new Set();
+for (const a of data.ANGELS) {
+  assert.ok(Number.isInteger(a.no) && a.no >= 1 && a.no <= 72, `angel no out of range: ${a.no}`);
+  assert.ok(!seenAngels.has(a.no), `duplicate angel no: ${a.no}`);
+  seenAngels.add(a.no);
+  for (const key of ["name", "zhName", "attribute", "attributeEn"]) {
+    assert.strictEqual(typeof a[key], "string", `angel field ${key} must be string (no ${a.no})`);
+    assert.ok(a[key].trim().length > 0, `angel field ${key} must be non-empty (no ${a.no})`);
+  }
+}
+
+console.log("OK: 72 demons + 5 books + 72 angels validated");
