@@ -18,6 +18,7 @@
     ["clavicula.html", "大钥匙"],
     ["lemegeton.html", "五部"],
     ["goetia.html", "七十二柱"],
+    ["ritual.html", "召唤阵"],
     ["kabbalah.html", "天使"],
     ["legacy.html", "衍生"],
     ["sources.html", "参考"]

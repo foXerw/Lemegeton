@@ -395,6 +395,53 @@ a:hover { color: var(--accent-strong); }
 }
 .sources li strong { color: var(--text); font-weight: 600; }
 
+/* ── 仪式器具 ─────────────────────────────── */
+.ritual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+.ritual-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+}
+.ritual-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  margin-bottom: 1.2rem;
+}
+.ritual-img {
+  max-width: 100%;
+  max-height: 260px;
+  width: auto;
+  object-fit: contain;
+  filter: invert(1);
+}
+.ritual-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text);
+  margin: 0 0 .3rem;
+}
+.ritual-en {
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 .8rem;
+}
+.ritual-desc { font-size: .92rem; color: var(--text-dim); margin: 0; }
+.ritual-desc .zh { display: block; margin-bottom: .4rem; }
+.ritual-desc .en { font-size: .88rem; font-style: italic; }
+
 /* ── 页脚 ─────────────────────────────────── */
 .site-footer {
   margin-top: 3rem;
