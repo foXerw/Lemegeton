@@ -340,6 +340,7 @@ a:hover { color: var(--accent-strong); }
   margin: 0 0 .2rem;
 }
 .modal-zh { color: var(--accent-strong); letter-spacing: .12em; margin: 0 0 .7rem; }
+.modal-alt { color: var(--text-faint); font-size: .82rem; letter-spacing: .04em; margin: .2rem 0 0; }
 .modal-rank { margin: 0 0 1.1rem; }
 .modal-rank .rank-badge { margin: 0 .25rem; }
 .modal-powers {
@@ -381,6 +382,7 @@ a:hover { color: var(--accent-strong); }
 .angel-table .ang-name { font-family: var(--serif); font-weight: 600; white-space: nowrap; }
 .angel-table .ang-zh { color: var(--accent-strong); white-space: nowrap; }
 .angel-table .ang-attr { color: var(--text-dim); }
+.angel-table .ang-degree { color: var(--text-dim); white-space: nowrap; }
 .angel-table .ang-demon { color: var(--text-faint); font-size: .82rem; }
 
 /* ── 来源列表 ─────────────────────────────── */
