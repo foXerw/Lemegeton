@@ -510,6 +510,52 @@ a:hover { color: var(--accent-strong); }
 .ritual-desc .zh { display: block; margin-bottom: .4rem; }
 .ritual-desc .en { font-size: .88rem; font-style: italic; }
 
+/* ── 天使图鉴 ─────────────────────────────── */
+.angel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .9rem;
+  margin-top: 1rem;
+}
+.angel-card {
+  text-align: center;
+  padding: 1.4rem .9rem 1.2rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color .2s, transform .2s, background .2s;
+}
+.angel-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-3);
+  transform: translateY(-3px);
+}
+.angel-he {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  direction: rtl;
+  margin: 0 0 .6rem;
+  letter-spacing: .04em;
+}
+.angel-name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 0;
+}
+.angel-zh { font-size: .82rem; color: var(--text-dim); margin: .15rem 0 .5rem; letter-spacing: .06em; }
+.angel-attr { font-size: .85rem; color: var(--text-dim); margin: 0 0 .5rem; }
+.angel-degree { font-size: .78rem; color: var(--text-faint); margin: 0 0 .4rem; letter-spacing: .04em; }
+.angel-demon {
+  font-size: .75rem;
+  color: var(--text-faint);
+  margin: 0;
+  border-top: 1px solid var(--border);
+  padding-top: .5rem;
+}
+
 /* ── 页脚 ─────────────────────────────────── */
 .site-footer {
   margin-top: 3rem;

@@ -33,14 +33,16 @@
       <p class="zh">十九世纪末的黄金黎明会（Hermetic Order of the Golden Dawn）把卡巴拉、塔罗与仪式魔法整合成一套严密的符号体系，所罗门的七十二魔与七十二天使都在其中获得新位置。阿莱斯特·克劳利（Aleister Crowley）随后编注了 Goetia，重绘封印、补注灵体信息，使这一谱系成为现代神秘学与流行文化共用的底本。</p>
       <p class="en">At the close of the nineteenth century the Hermetic Order of the Golden Dawn wove Kabbalah, tarot and ceremonial magic into one rigorous symbolic system, giving both the seventy-two demons and the seventy-two angels a new place. Aleister Crowley then edited the Goetia, redrawing seals and annotating the spirits, fixing the lineage as common stock for both modern occultism and popular culture.</p>
 
-      <h2>七十二天使对照表</h2>
-      <p class="zh">下表列出 72 位天使及其属性、黄道度数与「序号对应」的恶魔。属性为通行诠释，各传统拼写略有差异；「对应恶魔」为现代阐释。</p>
-      <p class="en">The table lists the seventy-two angels with their attributes, zodiac degrees and number-matched demons. Attributes follow common usage; spellings vary across traditions, and the demon pairing is a modern reading.</p>
+      <h2>七十二天使图鉴</h2>
+      <p class="zh">72 位天使，以希伯来名为中心。可按星座筛选、按名讳搜索。希伯来名为 Shem HaMephorash 标准重构，各传统拼写略有差异；「对应恶魔」为现代阐释。</p>
+      <p class="en">The seventy-two angels, with their Hebrew names. Filter by sign or search by name. The Hebrew follows the standard Shem HaMephorash reconstruction (spellings vary across traditions); the demon pairing is a modern reading.</p>
     </div>
 
-    <div class="angel-table-wrap">
-      <table id="angel-table" class="angel-table"></table>
+    <div class="controls">
+      <div id="angel-filters" class="rank-filters" role="group" aria-label="按星座筛选"></div>
+      <input id="angel-search" class="demon-search" type="search" placeholder="搜索天使名…" aria-label="搜索天使">
     </div>
+    <div id="angel-grid" class="angel-grid"></div>
   </main>
 
   <div id="site-footer"></div>

@@ -41,4 +41,11 @@ for (const a of data.ANGELS) {
   }
 }
 
-console.log("OK: 72 demons + 5 books + 72 angels validated");
+assert.ok(Array.isArray(data.HEBREW), "HEBREW must be an array");
+assert.strictEqual(data.HEBREW.length, 72, "must contain exactly 72 Hebrew names");
+for (const h of data.HEBREW) {
+  assert.strictEqual(typeof h, "string", "Hebrew name must be string");
+  assert.ok(h.trim().length > 0, "Hebrew name must be non-empty");
+}
+
+console.log("OK: 72 demons + 5 books + 72 angels + 72 Hebrew names validated");

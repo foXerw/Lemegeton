@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { DEMONS, BOOKS, ANGELS } = window.LEMEGETON_DATA;
+  const { DEMONS, BOOKS, ANGELS, HEBREW } = window.LEMEGETON_DATA;
 
   const RANK_ZH = {
     King: "王", Duke: "公爵", Prince: "亲王", Marquis: "侯爵",
@@ -155,36 +155,72 @@
     apply();
   }
 
-  /* ── 天使对照表 ───────────────────────────── */
+  /* ── 天使图鉴 ─────────────────────────────── */
   function initAngels() {
-    const tableEl = document.getElementById("angel-table");
-    if (!tableEl) return;
+    const gridEl = document.getElementById("angel-grid");
+    if (!gridEl) return;
+    const filtersEl = document.getElementById("angel-filters");
+    const searchEl = document.getElementById("angel-search");
 
+    let activeSign = "All";
+    let query = "";
+
+    function signOf(no) { return SIGNS[Math.floor(((no - 1) * 5) / 30)]; }
     function degreeOf(no) {
       const start = (no - 1) * 5;
-      const sign = SIGNS[Math.floor(start / 30)];
-      return `${sign} ${start % 30}°–${(start % 30) + 5}°`;
+      return `${SIGNS[Math.floor(start / 30)]} ${start % 30}°–${(start % 30) + 5}°`;
     }
 
-    const rows = ANGELS.map((a) => {
-      const d = DEMONS[a.no - 1];
-      return `<tr>
-        <td class="ang-no">${a.no}</td>
-        <td class="ang-name">${a.name}<br><span class="ang-zh">${a.zhName}</span></td>
-        <td class="ang-attr">${a.attribute}</td>
-        <td class="ang-degree">${degreeOf(a.no)}</td>
-        <td class="ang-demon">${d.no}. ${d.name} ${d.zhName}</td>
-      </tr>`;
-    }).join("");
+    function renderAngels(list) {
+      if (!list.length) {
+        gridEl.innerHTML = '<p class="note" style="grid-column:1/-1">未寻得此天使。</p>';
+        return;
+      }
+      gridEl.innerHTML = list.map((a) => {
+        const he = HEBREW[a.no - 1];
+        const d = DEMONS[a.no - 1];
+        return `
+          <article class="angel-card" data-no="${a.no}">
+            <p class="angel-he" lang="he" dir="rtl">${he}</p>
+            <p class="angel-name">${a.name}</p>
+            <p class="angel-zh">${a.zhName}</p>
+            <p class="angel-attr">${a.attribute}</p>
+            <p class="angel-degree">${degreeOf(a.no)}</p>
+            <p class="angel-demon">对应 ${d.no}. ${d.name} ${d.zhName}</p>
+          </article>
+        `;
+      }).join("");
+    }
 
-    tableEl.innerHTML = `
-      <thead>
-        <tr>
-          <th>#</th><th>天使</th><th>属性</th><th>度数</th><th>对应恶魔（现代阐释）</th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    `;
+    function buildFilters() {
+      const signs = ["All", ...SIGNS];
+      filtersEl.innerHTML = signs.map((s) => {
+        const label = s === "All" ? "全部" : s;
+        return `<button class="rank-filter${s === "All" ? " active" : ""}" data-sign="${s}">${label}</button>`;
+      }).join("");
+      filtersEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".rank-filter");
+        if (!btn) return;
+        activeSign = btn.dataset.sign;
+        filtersEl.querySelectorAll(".rank-filter").forEach((b) => b.classList.toggle("active", b === btn));
+        apply();
+      });
+    }
+
+    function apply() {
+      const q = query.trim().toLowerCase();
+      const list = ANGELS.filter((a) => {
+        const okSign = activeSign === "All" || signOf(a.no) === activeSign;
+        const okQuery = !q || a.name.toLowerCase().includes(q) || a.zhName.includes(q) || HEBREW[a.no - 1].includes(q);
+        return okSign && okQuery;
+      });
+      renderAngels(list);
+    }
+
+    searchEl.addEventListener("input", (e) => { query = e.target.value; apply(); });
+
+    buildFilters();
+    apply();
   }
 
   /* ── 卷轴首页滚动淡入 ─────────────────────── */
