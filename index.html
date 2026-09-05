@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LEMEGETON — 所罗门大小钥匙 · 档案</title>
+  <meta name="description" content="所罗门大小钥匙（Clavicula Salomonis / Lemegeton）的暗黑古典魔典档案：传说、五部书、七十二柱魔神图鉴及其传统延伸。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=UnifrakturMaguntia&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-nav">
+    <span class="brand">LEMEGETON</span>
+    <nav class="nav-links">
+      <a href="#legend">传说</a>
+      <a href="#clavicula">大钥匙</a>
+      <a href="#lemegeton">五部</a>
+      <a href="#compendium">七十二柱</a>
+      <a href="#kabbalah">卡巴拉</a>
+      <a href="#legacy">衍生</a>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero">
+    <div class="hero-seal" aria-label="所罗门封印（风格化演绎）">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <circle cx="100" cy="100" r="72" fill="none" stroke="currentColor" stroke-width="1"/>
+        <polygon points="100,30 160.6,135 39.4,135" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <polygon points="100,170 160.6,65 39.4,65" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <h1 class="hero-title">LEMEGETON</h1>
+    <p class="hero-subtitle">所罗门大小钥匙 · 档案</p>
+    <p class="hero-latin">Clavicula Salomonis &amp; Lemegeton</p>
+    <a class="scroll-hint" href="#legend">向下进入 ↓</a>
+  </section>
+
+  <section id="legend" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">所罗门的传说</h2>
+      <p class="section-subtitle">The Legend of Solomon</p>
+      <div class="prose">
+        <p class="zh">传说中，以色列王所罗门凭一枚刻有神名与六芒星的指环——「所罗门之印」——号令恶魔，役使它们搬运巨石、修建圣殿。圣殿落成后，所罗门将不顺服的恶魔尽数封入一口铜瓶，沉入巴比伦的深渊。后世魔典便假托这位君王之名，把这套召魔、御魔的技艺书写成册。</p>
+        <p class="en">By legend, King Solomon bore a ring engraved with the Name and a six-pointed star — the Seal of Solomon — by which he commanded demons to haul stone and raise the Temple. When the work was done, he sealed the disobedient spirits in a brazen vessel and cast it into the deeps of Babylon. The grimoires that followed borrowed his name to set down the arts of summoning and binding.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="clavicula" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">大钥匙 · 所罗门之钥</h2>
+      <p class="section-subtitle">Clavicula Salomonis</p>
+      <div class="prose">
+        <p class="zh">《所罗门之钥》（Clavicula Salomonis）成书于十四至十五世纪，托名所罗门，实为文艺复兴时期的仪式魔法手册。它聚焦于召唤天使与行星精灵、净化与祝圣，以及五芒星护符的制作——每一枚护符对应一颗行星，各有其时辰、金属与熏香。</p>
+        <p class="en">The Key of Solomon (Clavicula Salomonis) was compiled in the fourteenth and fifteenth centuries under Solomon's name, but is in truth a Renaissance manual of ceremonial magic. It concerns the summoning of angels and planetary spirits, purification and consecration, and the fashioning of pentacles — each bound to a planet with its own hour, metal and incense.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="lemegeton" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">小钥匙 · 五部书</h2>
+      <p class="section-subtitle">The Five Books of the Lemegeton</p>
+      <div class="prose">
+        <p class="zh">《所罗门的小钥匙》（Lemegeton）成书于十七世纪，将「所罗门掌控恶魔」的传说系统化为五部。点击展开，可见各书概要。</p>
+        <p class="en">The Lesser Key of Solomon (Lemegeton), compiled in the seventeenth century, systematises the legend of Solomon's command over demons into five books. Click to unfold each summary.</p>
+      </div>
+      <div id="books" class="books"></div>
+    </div>
+  </section>
+
+  <section id="compendium" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">七十二柱魔神图鉴</h2>
+      <p class="section-subtitle">Ars Goetia — The Seventy-Two</p>
+      <div class="controls">
+        <div id="rank-filters" class="rank-filters" role="group" aria-label="按位阶筛选"></div>
+        <input id="demon-search" class="demon-search" type="search" placeholder="搜索名讳…" aria-label="搜索恶魔">
+      </div>
+      <p class="note">封印均为风格化演绎；内容仅供历史与文化学习。</p>
+      <div id="demon-grid" class="demon-grid"></div>
+    </div>
+  </section>
+
+  <section id="kabbalah" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">卡巴拉与黄金黎明</h2>
+      <p class="section-subtitle">Kabbalah &amp; the Golden Dawn</p>
+      <div class="prose">
+        <p class="zh">在犹太卡巴拉传统中，《出埃及记》的神名被展开为七十二字名（Shem HaMephorash），对应七十二位天使。所罗门七十二魔的数目，常被视作这一神圣体系的黑暗镜像。十九世纪末，黄金黎明会将这套材料重新整理；阿莱斯特·克劳利更编注了 Goetia，使其成为现代神秘学与流行文化的通用素材。</p>
+        <p class="en">In the Kabbalah, the divine Name of Exodus unfolds into the seventy-two-letter Name (Shem HaMephorash), matched to seventy-two angels. The seventy-two demons of Solomon are often read as a dark mirror of that sacred order. At the close of the nineteenth century the Golden Dawn reordered the material, and Aleister Crowley edited the Goetia, fixing it as common stock for modern occultism and popular culture.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="legacy" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">流行文化衍生</h2>
+      <p class="section-subtitle">Legacy in Popular Culture</p>
+      <div class="prose">
+        <p class="zh">今天，所罗门七十二柱早已走出魔典，进入动漫、影视与游戏——从人格化的「七十二柱魔神」到形形色色的召唤兽与角色。它们不再只是仪式上的名讳，而成了一个共享的奇幻符号库，承载着人们对「召唤、契约与代价」的想象。</p>
+        <p class="en">Today the seventy-two have left the grimoire for anime, film and games — as personified "seventy-two pillars" and all manner of summoned creatures and characters. They are no longer merely ritual names, but a shared lexicon of fantasy, carrying our imagination of summons, pacts and their price.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="coda" class="section reveal">
+    <div class="section-inner">
+      <h2 class="section-title">尾章 · 声明</h2>
+      <p class="section-subtitle">Coda &amp; Sources</p>
+      <div class="prose">
+        <p class="zh">本站内容仅为历史、文化与文学之学习，不宣扬、亦不指导任何仪式实践。所罗门魔典是文艺复兴与近代早期欧洲神秘学传统的产物，其价值在于理解一种思想的谱系。</p>
+        <p class="en">This site is offered for historical, cultural and literary study alone; it endorses and instructs no ritual practice. The Solomonic grimoires are products of the Renaissance and early-modern European occult tradition, and their worth lies in understanding a genealogy of ideas.</p>
+      </div>
+      <ul class="sources">
+        <li>《所罗门之钥》Clavicula Salomonis</li>
+        <li>《所罗门的小钥匙》The Lesser Key of Solomon (Lemegeton) — S.L. MacGregor Mathers / Aleister Crowley 编注</li>
+        <li>Johann Weyer《Pseudomonarchia Daemonum》(1563)</li>
+        <li>Heinrich Cornelius Agrippa《Three Books of Occult Philosophy》</li>
+        <li>黄金黎明会（Hermetic Order of the Golden Dawn）文献</li>
+      </ul>
+      <p class="colophon">LEMEGETON · 所罗门大小钥匙 · 档案</p>
+    </div>
+  </section>
+
+  <div id="demon-modal" class="modal" hidden aria-hidden="true"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
