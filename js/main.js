@@ -15,6 +15,7 @@
   const NAV = [
     ["index.html", "首页"],
     ["legend.html", "传说"],
+    ["worldview.html", "世界观"],
     ["clavicula.html", "大钥匙"],
     ["lemegeton.html", "五部"],
     ["goetia.html", "七十二柱"],
@@ -30,6 +31,14 @@
   function sigilFile(no) {
     const ext = (no <= 3 || (no >= 50 && no <= 52)) ? "png" : "jpg";
     return "assets/sigils/" + String(no).padStart(2, "0") + "." + ext;
+  }
+
+  /* ── 罗马数字(条目号 = 朱批) ──────────────── */
+  function roman(n) {
+    const map = [[50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
+    let out = "";
+    for (const [v, s] of map) { while (n >= v) { out += s; n -= v; } }
+    return out;
   }
 
   /* ── 共享导航 ─────────────────────────────── */
@@ -75,7 +84,15 @@
     if (!gridEl) return;
     const filtersEl = document.getElementById("rank-filters");
     const searchEl = document.getElementById("demon-search");
-    const modalEl = document.getElementById("demon-modal");
+    let modalEl = document.getElementById("demon-modal");
+    if (!modalEl) {
+      modalEl = document.createElement("div");
+      modalEl.id = "demon-modal";
+      modalEl.className = "modal";
+      modalEl.hidden = true;
+      modalEl.setAttribute("aria-hidden", "true");
+      document.body.appendChild(modalEl);
+    }
 
     let activeRank = "All";
     let query = "";
@@ -87,7 +104,7 @@
       }
       gridEl.innerHTML = list.map((d) => `
         <article class="demon-card" data-no="${d.no}" role="button" tabindex="0" aria-label="${d.name}（${d.zhName}）">
-          <span class="demon-no">${String(d.no).padStart(2, "0")}</span>
+          <span class="demon-no">${roman(d.no)}</span>
           <img class="sigil" src="${sigilFile(d.no)}" alt="${d.name} 封印（风格化来源图）" loading="lazy">
           <div><span class="rank-badge">${d.rankEn.join(" & ")}</span></div>
           <p class="demon-name">${d.name}</p>
@@ -123,7 +140,9 @@
     }
 
     function openDemon(demon) {
-      const alt = demon.altNames.length ? `<p class="modal-alt">别名 ${demon.altNames.join(" · ")}</p>` : "";
+      const alt = demon.altNames.length ? `<span class="modal-alt">别名 ${demon.altNames.join(" · ")}</span>` : "";
+      const form = demon.form ? `<p class="modal-meta"><span class="meta-k">显现形态</span>${demon.formZh || ""}${demon.formZh ? " · " : ""}<em class="en">${demon.form}</em></p>` : "";
+      const legions = demon.legions ? `<p class="modal-meta"><span class="meta-k">统御军团</span>${demon.legions} 个军团</p>` : "";
       modalEl.innerHTML = `
         <div class="modal-backdrop" data-close></div>
         <div class="modal-panel" role="dialog" aria-modal="true" aria-label="${demon.name}（${demon.zhName}）">
@@ -134,6 +153,7 @@
             <p class="modal-zh">${demon.zhName}${alt}</p>
             <p class="modal-rank">${demon.rankEn.map((r, i) => `<span class="rank-badge">${r} · ${demon.rankZh[i]}</span>`).join("")}</p>
           </div>
+          ${form}${legions}
           <p class="modal-powers"><span>${demon.powers}</span><span class="en">${demon.powersEn}</span></p>
           <div class="modal-desc">
             <p class="zh">${demon.desc}</p>
@@ -182,6 +202,16 @@
     const filtersEl = document.getElementById("angel-filters");
     const searchEl = document.getElementById("angel-search");
 
+    let modalEl = document.getElementById("angel-modal");
+    if (!modalEl) {
+      modalEl = document.createElement("div");
+      modalEl.id = "angel-modal";
+      modalEl.className = "modal";
+      modalEl.hidden = true;
+      modalEl.setAttribute("aria-hidden", "true");
+      document.body.appendChild(modalEl);
+    }
+
     let activeSign = "All";
     let query = "";
 
@@ -200,7 +230,7 @@
         const he = HEBREW[a.no - 1];
         const d = DEMONS[a.no - 1];
         return `
-          <article class="angel-card" data-no="${a.no}">
+          <article class="angel-card" data-no="${a.no}" role="button" tabindex="0" aria-label="${a.name}（${a.zhName}）">
             <p class="angel-he" lang="he" dir="rtl">${he}</p>
             <p class="angel-name">${a.name}</p>
             <p class="angel-zh">${a.zhName}</p>
@@ -210,6 +240,46 @@
           </article>
         `;
       }).join("");
+    }
+
+    function openAngel(angel) {
+      const d = DEMONS[angel.no - 1];
+      const he = HEBREW[angel.no - 1];
+      const gd = [];
+      if (angel.order) gd.push(`品级 ${angel.order}`);
+      if (angel.sephirah) gd.push(`瑟菲拉 ${angel.sephirah}`);
+      if (angel.psalm) gd.push(`诗篇 ${angel.psalm}`);
+      const gdLine = gd.length ? `<p class="modal-meta"><span class="meta-k">金黎明对应</span>${gd.join(" · ")}</p>` : "";
+      const govLine = angel.governs ? `<p class="modal-powers"><span>${angel.governsZh || angel.attribute}</span><span class="en">${angel.governs}</span></p>` : "";
+      modalEl.innerHTML = `
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-label="${angel.name}（${angel.zhName}）">
+          <button class="modal-close" data-close aria-label="关闭">✕</button>
+          <div class="modal-head">
+            <p class="modal-he" lang="he" dir="rtl">${he}</p>
+            <h3 class="modal-name">${angel.name}</h3>
+            <p class="modal-zh">${angel.zhName}</p>
+            <p class="modal-rank"><span class="rank-badge">Shem HaMephorash · ${angel.no}</span></p>
+          </div>
+          ${gdLine}${govLine}
+          <div class="modal-desc">
+            <p class="zh">执掌黄道 ${degreeOf(angel.no)},${angel.attribute}。金黎明的品级、瑟菲拉与诗篇对应为近代整编,供参照。</p>
+            <p class="en">Rules ${degreeOf(angel.no)} of the zodiac; ${angel.attributeEn}. The order, Sephirah and psalm follow the Golden Dawn's compilation.</p>
+            <p class="zh mirror-line">黑暗镜像:${d.no}. ${d.name}(${d.zhName})——${d.powers}</p>
+            <p class="en">Dark mirror: spirit ${d.no}, ${d.name}, ${d.powersEn}</p>
+          </div>
+        </div>
+      `;
+      modalEl.hidden = false;
+      modalEl.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeAngelModal() {
+      modalEl.hidden = true;
+      modalEl.setAttribute("aria-hidden", "true");
+      modalEl.innerHTML = "";
+      document.body.style.overflow = "";
     }
 
     function buildFilters() {
@@ -238,6 +308,22 @@
     }
 
     searchEl.addEventListener("input", (e) => { query = e.target.value; apply(); });
+    gridEl.addEventListener("click", (e) => {
+      const card = e.target.closest(".angel-card");
+      if (!card) return;
+      const angel = ANGELS.find((a) => a.no === Number(card.dataset.no));
+      if (angel) openAngel(angel);
+    });
+    gridEl.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const card = e.target.closest(".angel-card");
+      if (!card) return;
+      e.preventDefault();
+      const angel = ANGELS.find((a) => a.no === Number(card.dataset.no));
+      if (angel) openAngel(angel);
+    });
+    modalEl.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) closeAngelModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modalEl.hidden) closeAngelModal(); });
 
     buildFilters();
     apply();
